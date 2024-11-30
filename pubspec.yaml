@@ -1,0 +1,33 @@
+name: food_ordering_app
+description: A food ordering application in Flutter.
+
+environment:
+  sdk: '^3.5.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+  
+  
+  assets:
+    - assets/images/pizza.png
+    - assets/images/burger.png
+    - assets/images/sushi.png
+
+  
+
