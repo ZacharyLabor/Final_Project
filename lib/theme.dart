@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     primaryColor: Colors.redAccent,
-    hintColor: Colors.yellow,
     scaffoldBackgroundColor: Colors.white,
     textTheme: TextTheme(
-      displayLarge: TextStyle(
+      headlineLarge: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
         color: Colors.redAccent,
-        fontFamily: 'Poppins',
       ),
-      displayMedium: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
+      headlineMedium: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
         color: Colors.black,
-        fontFamily: 'Poppins',
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 18,
+        color: Colors.black54,
       ),
       bodyLarge: TextStyle(
         fontSize: 16,
         color: Colors.black87,
-        fontFamily: 'Poppins',
       ),
     ),
   );

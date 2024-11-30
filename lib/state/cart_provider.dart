@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import '../models/food_item.dart';
 
 class CartProvider with ChangeNotifier {
-  final Map<String, FoodItem> _items = {};
+  final List<FoodItem> _cartItems = [];
 
-  Map<String, FoodItem> get items => _items;
+  List<FoodItem> get cartItems => _cartItems;
 
-  void addItem(FoodItem item) {
-    _items[item.id] = item;
+  void addToCart(FoodItem item) {
+    _cartItems.add(item);
     notifyListeners();
   }
 
-  void removeItem(String id) {
-    _items.remove(id);
+  void removeFromCart(FoodItem item) {
+    _cartItems.remove(item);
     notifyListeners();
   }
 
-  double get totalPrice {
-    return _items.values.fold(0.0, (sum, item) => sum + item.price);
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
   }
 }

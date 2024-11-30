@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
-import '../widgets/food_card.dart';
 import '../models/food_item.dart';
+import 'details_screen.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<FoodItem> foodItems = [
-    FoodItem(id: '1', name: 'Pizza', price: 8.99, imageUrl: 'assets/images/pizza.png'),
-    FoodItem(id: '2', name: 'Burger', price: 6.49, imageUrl: 'assets/images/burger.png'),
-    FoodItem(id: '3', name: 'Fries', price: 2.99, imageUrl: 'assets/images/fries.png'),
+    FoodItem(
+      id: '1',
+      name: 'Pizza',
+      price: 8.99,
+      imageUrl: 'assets/images/pizza.png',
+      description: 'Cheesy, delicious pizza with fresh toppings.',
+    ),
+    FoodItem(
+      id: '2',
+      name: 'Burger',
+      price: 6.49,
+      imageUrl: 'assets/images/burger.png',
+      description: 'Juicy beef patty with lettuce, tomato, and cheese.',
+    ),
+    FoodItem(
+      id: '3',
+      name: 'Sushi',
+      price: 12.99,
+      imageUrl: 'assets/images/sushi.png',
+      description: 'Fresh sushi rolls with premium ingredients.',
+    ),
   ];
 
   @override
@@ -14,10 +33,26 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Zachary's Fast Food App",
-          style: Theme.of(context).textTheme.headline1,
+          "Zachary's Fast Food",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.red, // Burger King red
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -27,7 +62,11 @@ class HomeScreen extends StatelessWidget {
             Container(
               height: 200,
               decoration: BoxDecoration(
-                color: Colors.yellow,
+                gradient: LinearGradient(
+                  colors: [Colors.red, Colors.yellow], // Red-to-yellow gradient
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -42,13 +81,16 @@ class HomeScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.redAccent,
+                        color: Colors.white,
                       ),
                     ),
                     SizedBox(height: 10),
                     Text(
                       "Hot, Fresh, and Delicious Fast Food",
-                      style: Theme.of(context).textTheme.headline2,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
@@ -56,58 +98,98 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            // Featured Items Carousel
+            // "Our Specials" Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 "Our Specials",
-                style: Theme.of(context).textTheme.headline1,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown, // Brown text
+                ),
               ),
             ),
             SizedBox(height: 10),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: foodItems.map((item) {
-                  return FoodCard(foodItem: item);
-                }).toList(),
-              ),
-            ),
-            SizedBox(height: 20),
 
-            // Menu Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                "Explore the Menu",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            SizedBox(height: 10),
+            // Food Grid (3 items per row)
             GridView.builder(
               padding: EdgeInsets.symmetric(horizontal: 16),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 3, // 3 items per row
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                childAspectRatio: 3 / 4,
+                childAspectRatio: 0.8, // Adjust for smaller proportions
               ),
-              itemCount: foodItems.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
+              itemCount: foodItems.length,
               itemBuilder: (context, index) {
-                return FoodCard(foodItem: foodItems[index]);
+                final item = foodItems[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailsScreen(foodItem: item),
+                      ),
+                    );
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          item.imageUrl,
+                          fit: BoxFit.cover,
+                          height: 100, // Smaller image
+                          width: 100,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        item.name,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown, // Brown for item name
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        '\$${item.price.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        item.description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.redAccent,
-        child: Icon(Icons.shopping_cart, color: Colors.white),
         onPressed: () {
-          Navigator.pushNamed(context, '/cart');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CartScreen()),
+          );
         },
+        backgroundColor: Colors.yellow, // Yellow button
+        child: Icon(Icons.shopping_cart, color: Colors.brown), // Brown icon
       ),
     );
   }

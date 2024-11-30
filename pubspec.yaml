@@ -16,18 +16,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/images/  # Includes all images in the folder
+
   fonts:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
-  
-  
-  assets:
-    - assets/images/pizza.png
-    - assets/images/burger.png
-    - assets/images/sushi.png
-
-  
-

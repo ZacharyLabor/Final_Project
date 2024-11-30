@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
-import 'theme.dart';
-import 'screens/home_screen.dart';
-import 'screens/cart_screen.dart';
-import 'screens/details_screen.dart';
-import 'state/cart_provider.dart';
 import 'package:provider/provider.dart';
+import 'state/cart_provider.dart'; // Import CartProvider for state management
+import 'screens/home_screen.dart'; // Import HomeScreen
+import 'theme.dart'; // Import your app theme
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => CartProvider(), // Initialize CartProvider
       child: MaterialApp(
-        title: 'Food Ordering App',
-        theme: AppTheme.lightTheme,
-        home: HomeScreen(),
-        routes: {
-          '/cart': (context) => CartScreen(),
-          '/details': (context) => DetailsScreen(),
-        },
+        title: 'Zachary\'s Fast Food App',
+        debugShowCheckedModeBanner: false, // Remove debug banner
+        theme: AppTheme.lightTheme, // Apply the custom theme
+        home: HomeScreen(), // Set HomeScreen as the default route
       ),
     );
   }
